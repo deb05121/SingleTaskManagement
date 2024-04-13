@@ -4,8 +4,7 @@ import com.example.SingleTaskManagement.model.Task;
 import com.example.SingleTaskManagement.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,8 +18,24 @@ public class TaskRestController {
     @GetMapping("/tasks")
     List<Task> getTasks() {
         log.info("Finding all tasks.");
-        return null;
+        return taskService.getAllTask();
     }
 
+    @PostMapping("/task")
+    void addTask(@RequestBody Task task) {
+        log.info("Adding new task.{}", task);
+        taskService.addTask(task);
+    }
 
+    @DeleteMapping("/task/{id}")
+    void deleteTaskById(@PathVariable int id) {
+        log.info("Deleted a task with id {}", id);
+        taskService.deleteTaskById(id);
+    }
+
+    @PutMapping("/task/{id}")
+    void updateTask(@PathVariable int id, @RequestBody Task task){
+        log.info("Udpated the task with id {}", id);
+        taskService.updateTaskById(id, task);
+    }
 }
