@@ -8,13 +8,21 @@ import java.util.List;
 @Service
 
 public class TaskService {
-    public List<Task> getAllTask(){
-        return null;
-    }
-    public Task getTaskById(int id){
+    public List<Task> getAllTask() {
         return null;
     }
 
+    public Task getTaskById(int id) {
+        return null;
+    }
+
+    public void deleteTaskById(int id) {
+
+    }
+
+    public void updateTaskById(Task task) {
+        
+    }
 
 
 }
