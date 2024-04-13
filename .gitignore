@@ -166,4 +166,3 @@ build/
 ### Application.yml ###
 application.yml
 oauth-credentials.json
-application.properties
