@@ -5,9 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface TaskRepository extends JpaRepository<Task, Long> {
+public interface TaskRepository extends JpaRepository<Task, Integer> {
     List<Task> findAll();
-    List<Task> findId();
-    List<Task> findTitle();
+    List<Task> findById(int id);
 
 }

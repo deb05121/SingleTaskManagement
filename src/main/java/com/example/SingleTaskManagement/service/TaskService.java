@@ -20,9 +20,11 @@ public class TaskService {
 
     }
 
-    public void updateTaskById(Task task) {
+    public void updateTaskById(int id, Task task) {
         
     }
+
+    public void addTask(Task task){}
 
 
 }
