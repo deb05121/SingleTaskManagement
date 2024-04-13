@@ -1,9 +1,6 @@
 package com.example.SingleTaskManagement.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
@@ -21,6 +18,7 @@ public class Task {
     private String title;
     private String description;
     private Priority priority;
+    @Column(name = "due_date")
     private Date dueDate;
 
 }
