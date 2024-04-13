@@ -8,19 +8,19 @@ import lombok.*;
 
 import java.util.Date;
 
-@Entity(name = "borrowed_books")
+@Entity(name = "task")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BorrowedBook {
+public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String title;
     private String description;
     private Priority priority;
-    private Date duedate;
+    private Date dueDate;
 
 }
