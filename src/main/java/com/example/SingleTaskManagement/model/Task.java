@@ -3,7 +3,7 @@ package com.example.SingleTaskManagement.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Entity(name = "task")
 @Getter
@@ -13,12 +13,14 @@ import java.util.Date;
 @Builder
 public class Task {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String title;
     private String description;
+    @Enumerated(EnumType.STRING)
     private Priority priority;
     @Column(name = "due_date")
     private Date dueDate;
+
 
 }
