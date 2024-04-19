@@ -11,6 +11,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+
 public class Task {
     @Id
     //@GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,5 +23,8 @@ public class Task {
     @Column(name = "due_date")
     private Date dueDate;
 
-
+    @Override
+    public String toString() {
+        return  dueDate + "";
+    }
 }

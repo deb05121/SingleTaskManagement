@@ -20,19 +20,19 @@ public class TaskRestController {
         return taskService.getAllTask();
     }
 
-    @PostMapping("/task")
+    @PostMapping("/tasks")
     void addTask(@RequestBody Task task) {
         log.info("Adding new task.{}", task);
         taskService.addNewTask(task);
     }
 
-    @DeleteMapping("/task/{id}")
+    @DeleteMapping("/tasks/{id}")
     void deleteTaskById(@PathVariable long id) {
         log.info("Deleted a task with id {}", id);
         taskService.deleteTaskById(id);
     }
 
-    @PutMapping("/task/{id}")
+    @PutMapping("/tasks/{id}")
     void updateTask(@PathVariable long id, @RequestBody Task task) {
         log.info("Updated the task with id {}", id);
         taskService.updateTask(id, task);
