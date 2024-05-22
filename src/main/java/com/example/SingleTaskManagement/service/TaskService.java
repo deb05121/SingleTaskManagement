@@ -25,50 +25,24 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
 
-    public void updateTask(long id, Task task) {
-        if (validator(task.getTitle(), task.getDescription(), task.getDueDate().toString())) {
+    public void updateTask(long id, Task taskOfUser) {
 
-            final var taskToUpdate = taskRepository.findById(id);
-            for (Task task1 : taskToUpdate) {
-                task1.setTitle(task.getTitle());
-                task1.setDescription(task.getDescription());
-                task1.setPriority(task.getPriority());
-                task1.setDueDate(task.getDueDate());
-                taskRepository.save(task1);
-            }
-        } else {
-            log.error("These are invalid data.");
-        }
+        final var taskToUpdate = taskRepository.findById(id);
+        taskToUpdate.ifPresentOrElse(
+                (task1) -> {
+                    task1.setTitle(taskOfUser.getTitle());
+                    task1.setDescription(taskOfUser.getDescription());
+                    task1.setPriority(taskOfUser.getPriority());
+                    task1.setDueDate(taskOfUser.getDueDate());
+                    taskRepository.save(taskToUpdate.orElseThrow());
+                },
+                () -> log.error("No value")
+        );
 
     }
 
-    public void addNewTask(Task task) {
-
-        if (validator(task.getTitle(), task.getDescription(), task.getDueDate().toString())) {
-
-            taskRepository.save(task);
-        } else {
-            log.error("This isn't valid task object.");
-        }
-    }
-
-    private boolean validator(String title, String description, String taskDate) {
-
-        return (titleValidator(title) && descriptionValidator(description) && javaDateValidator(taskDate));
-    }
-
-    boolean titleValidator(String title) {
-
-        return title.matches("[ABC]/2024");
-    }
-
-    boolean descriptionValidator(String description) {
-
-        return description.length() <= 45;
-    }
-
-    boolean javaDateValidator(String taskDate) {
-
-        return taskDate.matches("2024-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])");
+    public Task addNewTask(Task task) {
+        taskRepository.save(task);
+        return task;
     }
 }
