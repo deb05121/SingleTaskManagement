@@ -15,13 +15,13 @@ public class CreateTaskDto {
 
     @NotNull(message = "Title is required")
     @NotEmpty(message = "Title can't be empty")
-    @Pattern(regexp = "[ABC]\\/2024", message = "Title must start with Capital letter: A, B or C")
-    @Size(max = 6, message = "Max 6 characters must be")
+    @Pattern(regexp = "[ABC]\\/202[456]", message = "Title must start with Capital letter: A, B or C")
+    @Size(max = 6, message = "It must be 6 characters at most")
     private String title;
 
     @NotNull(message = "Description is required")
     @NotEmpty(message = "Description can't be empty")
-    @Size(max = 45, message = "Max 45 characters must be")
+    @Size(max = 25, message = "It must be 25 characters at most")
     private String description;
 
     @Enumerated(EnumType.STRING)

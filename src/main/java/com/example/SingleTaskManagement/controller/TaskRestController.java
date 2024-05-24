@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @Slf4j
@@ -28,23 +29,21 @@ public class TaskRestController {
     ResponseEntity<Task> addTask(@RequestBody @Valid CreateTaskDto createTaskDto) {
         log.info("Creating new task.{}", createTaskDto);
         Task task = createTaskDto.toTask();
-        log.info("Adding new task.{}", task);
+        log.info("Adding new task: {}", task);
 
         return new ResponseEntity<>(taskService.addNewTask(task), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/tasks/{id}")
     void deleteTaskById(@PathVariable long id) {
-        log.info("Deleted a task with id {}", id);
         taskService.deleteTaskById(id);
     }
 
     @PutMapping("/tasks/{id}")
-    ResponseEntity<Task> updateTask(@PathVariable long id, @RequestBody @Valid CreateTaskDto createTaskDto) {
+    ResponseEntity<Optional<Task>> updateTask(@PathVariable long id, @RequestBody @Valid CreateTaskDto createTaskDto) {
         log.info("Updated the task with id {}", id);
         Task task = createTaskDto.toTask();
-        taskService.updateTask(id, task);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(taskService.updateTask(id, task), HttpStatus.OK);
     }
 }
