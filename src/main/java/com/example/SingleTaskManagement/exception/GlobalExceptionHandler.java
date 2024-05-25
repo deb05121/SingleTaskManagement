@@ -15,28 +15,20 @@ import java.util.*;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, Set<String>>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+    public ResponseEntity<Map<String, List<String>>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         log.error("Validation failed");
-        List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
-        List<String> fields = new ArrayList<>();
-        Set<String> errors = new HashSet<>();
-        /*TODO: return all error messages for a field instead
-        ex.getBindingResult().getFieldErrors().forEach(
-                error -> errorFields.put(error.getField(), (error.getDefaultMessage()))
-        );*/
-        Map<String, Set<String>> errorMap = new HashMap<>();
-        for(FieldError fieldError: fieldErrors){
-            fields.add(fieldError.getField());
-        }
-        for(String field: fields){
-            for(FieldError error: fieldErrors){
-                if(error.getField().equals(field)){
-                    errors.add(error.getDefaultMessage());
+        Map<String, List<String>> fieldErrorMessages = new HashMap<>();
+        //TODO: return all error messages for a field instead
+        ex.getBindingResult().getFieldErrors().forEach(error ->
+                {
+                    String field = error.getField();
+                    String message = error.getDefaultMessage();
+                    if(!fieldErrorMessages.containsKey(field)){
+                        fieldErrorMessages.put(field, new ArrayList<>());
+                    }
+                    fieldErrorMessages.get(field).add(message);
                 }
-            }
-            errorMap.put(field, errors);
-        }
-
-        return new ResponseEntity<>(errorMap, HttpStatus.BAD_REQUEST);
+        );
+        return new ResponseEntity<>(fieldErrorMessages, HttpStatus.BAD_REQUEST);
     }
 }
