@@ -11,12 +11,14 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class Task {
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String title;
     private String description;
+    //to be compatible with Enum of MySQL database
     @Enumerated(EnumType.STRING)
     private Priority priority;
     @Column(name = "due_date")

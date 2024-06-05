@@ -1,12 +1,17 @@
 package com.example.SingleTaskManagement.controller;
 
+import com.example.SingleTaskManagement.dto.CreateTaskDto;
 import com.example.SingleTaskManagement.model.Task;
 import com.example.SingleTaskManagement.service.TaskService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @Slf4j
@@ -20,21 +25,25 @@ public class TaskRestController {
         return taskService.getAllTask();
     }
 
-    @PostMapping("/task")
-    void addTask(@RequestBody Task task) {
-        log.info("Adding new task.{}", task);
-        taskService.addNewTask(task);
+    @PostMapping("/tasks")
+    ResponseEntity<Task> addTask(@RequestBody @Valid CreateTaskDto createTaskDto) {
+        log.info("Creating new task.{}", createTaskDto);
+        Task task = createTaskDto.toTask();
+        log.info("Adding new task: {}", task);
+
+        return new ResponseEntity<>(taskService.addNewTask(task), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/task/{id}")
+    @DeleteMapping("/tasks/{id}")
     void deleteTaskById(@PathVariable long id) {
-        log.info("Deleted a task with id {}", id);
         taskService.deleteTaskById(id);
     }
 
-    @PutMapping("/task/{id}")
-    void updateTask(@PathVariable long id, @RequestBody Task task){
+    @PutMapping("/tasks/{id}")
+    ResponseEntity<Optional<Task>> updateTask(@PathVariable long id, @RequestBody @Valid CreateTaskDto createTaskDto) {
         log.info("Updated the task with id {}", id);
-        taskService.updateTask(id, task);
+        Task task = createTaskDto.toTask();
+
+        return new ResponseEntity<>(taskService.updateTask(id, task), HttpStatus.OK);
     }
 }

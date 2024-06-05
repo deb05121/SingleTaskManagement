@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class TaskController {
 
     private final TaskService taskService;
+
     @GetMapping("/tasks/view")
-    public String viewTasks(Model model){
+    public String viewTasks(Model model) {
         log.info("Listing all tasks on ViewTasks.html");
-        model.addAttribute("tasks",taskService.getAllTask());
+        model.addAttribute("tasks", taskService.getAllTask());
         return "ViewTasks";
     }
 }
